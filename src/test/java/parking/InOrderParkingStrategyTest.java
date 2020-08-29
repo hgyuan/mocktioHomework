@@ -92,7 +92,6 @@ public class InOrderParkingStrategyTest {
 
   @Test
   public void testPark_givenThereIsOneFullParkingLot_thenCreateReceipt() {
-
     //given
     Car car = Mockito.spy(new Car("carName"));
     List<ParkingLot> parkingLots = Mockito.spy(new ArrayList<>());
@@ -111,8 +110,21 @@ public class InOrderParkingStrategyTest {
 
   @Test
   public void testPark_givenThereIsMultipleParkingLotAndFirstOneIsFull_thenCreateReceiptWithUnfullParkingLot() {
-
-    /* Exercise 3: Test park() method. Use Mockito.spy and Mockito.verify to test the situation for multiple parking lot situation */
+    //given
+    Car car = Mockito.spy(new Car("carName"));
+    List<ParkingLot> parkingLots = Mockito.spy(new ArrayList<>());
+    ParkingLot parkingLotOne = Mockito.spy(new ParkingLot("richard", 0));
+    ParkingLot parkingLotTwo = Mockito.spy(new ParkingLot("richard", 2));
+    parkingLots.add(parkingLotOne);
+    parkingLots.add(parkingLotTwo);
+    InOrderParkingStrategy parkingStrategy = Mockito.spy(new InOrderParkingStrategy());
+    //when
+    Receipt receipt = parkingStrategy.park(parkingLots, car);
+    //then
+    verify(parkingStrategy, times(0)).createNoSpaceReceipt(car);
+    verify(parkingStrategy, times(1)).createReceipt(parkingLotTwo, car);
+    /* Exercise 3: Test park() method. Use Mockito.spy and
+    Mockito.verify to test the situation for multiple parking lot situation */
 
   }
 
