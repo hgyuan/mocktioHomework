@@ -4,10 +4,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Mockito.*;
 import static parking.ParkingStrategy.NO_PARKING_LOT;
 
 
@@ -51,8 +54,19 @@ public class InOrderParkingStrategyTest {
 
   @Test
   public void testPark_givenNoAvailableParkingLot_thenCreateNoSpaceReceipt() {
+    //given
+    Car car = Mockito.spy(new Car("carName"));
+    List<ParkingLot> parkingLots = Mockito.spy(new ArrayList<>());
+    InOrderParkingStrategy parkingStrategy = Mockito.spy(new InOrderParkingStrategy());
+    //when
+    Receipt receipt = parkingStrategy.park(parkingLots, car);
+    //then
+    Assert.assertEquals("carName", receipt.getCarName());
+    Assert.assertEquals(NO_PARKING_LOT, receipt.getParkingLotName());
+    verify(parkingStrategy, times(1)).createNoSpaceReceipt(car);
 
-    /* Exercise 2: Test park() method. Use Mockito.spy and Mockito.verify to test the situation for no available parking lot */
+    /* Exercise 2: Test park() method. Use Mockito.spy and
+    Mockito.verify to test the situation for no available parking lot */
 
   }
 
