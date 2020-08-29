@@ -17,7 +17,16 @@ public class InOrderParkingStrategyTest {
 
   @Test
   public void testCreateReceipt_givenACarAndAParkingLog_thenGiveAReceiptWithCarNameAndParkingLotName() throws NoSuchMethodException {
-
+    //given
+    Car car = mock(Car.class);
+    ParkingLot parkingLot = mock(ParkingLot.class);
+    //when
+    when(parkingLot.getName()).thenReturn("parkingLotName");
+    when(car.getName()).thenReturn("carName");
+    Receipt receipt = inOrderParkingStrategy.createReceipt(parkingLot, car);
+    //then
+    Assert.assertEquals("carName", receipt.getCarName());
+    Assert.assertEquals("parkingLotName", receipt.getParkingLotName());
     /* Exercise 1, Write a test case on InOrderParkingStrategy.createReceipt()
      * With using Mockito to mock the input parameter */
 
