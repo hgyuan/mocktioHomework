@@ -94,6 +94,13 @@ public class VipParkingStrategyTest {
 
   @Test
   public void testIsAllowOverPark_givenCarNameContainsCharacterAAndIsNotVipCar_thenReturnFalse() {
+    //given
+    Car car = Mockito.spy(new Car("ACarName"));
+    //when
+    when(carDao.isVip(any())).thenReturn(false);
+    Boolean result = vipParkingStrategy.isAllowOverPark(car);
+    //then
+    Assert.assertEquals(false,result);
     /* Exercise 5, Write a test case on VipParkingStrategy.isAllowOverPark()
      * You may refactor the code, or try to use
      * use @RunWith(MockitoJUnitRunner.class), @Mock (use Mockito, not PowerMock) and @InjectMocks
