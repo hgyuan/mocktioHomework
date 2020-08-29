@@ -8,6 +8,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static parking.ParkingStrategy.NO_PARKING_LOT;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -34,6 +35,14 @@ public class InOrderParkingStrategyTest {
 
   @Test
   public void testCreateNoSpaceReceipt_givenACar_thenGiveANoSpaceReceipt() {
+    //given
+    Car car = mock(Car.class);
+    //when
+    when(car.getName()).thenReturn("carName");
+    Receipt receipt = inOrderParkingStrategy.createNoSpaceReceipt(car);
+    //then
+    Assert.assertEquals("carName", receipt.getCarName());
+    Assert.assertEquals(NO_PARKING_LOT, receipt.getParkingLotName());
 
     /* Exercise 1, Write a test case on InOrderParkingStrategy.createNoSpaceReceipt()
      * With using Mockito to mock the input parameter */
