@@ -2,14 +2,25 @@ package parking;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class VipParkingStrategyTest {
+
+  @InjectMocks
+  VipParkingStrategy vipParkingStrategy;
+
+  @Mock
+  CarDao carDao;
 
   @Test
   public void testPark_givenAVipCarAndAFullParkingLog_thenGiveAReceiptWithCarNameAndParkingLotName() {
@@ -53,7 +64,13 @@ public class VipParkingStrategyTest {
 
   @Test
   public void testIsAllowOverPark_givenCarNameContainsCharacterAAndIsVipCar_thenReturnTrue() {
-
+    //given
+    Car car = Mockito.spy(new Car("ACarName"));
+    //when
+    when(carDao.isVip(any())).thenReturn(true);
+    Boolean result = vipParkingStrategy.isAllowOverPark(car);
+    //then
+    Assert.assertEquals(true,result);
     /* Exercise 5, Write a test case on VipParkingStrategy.isAllowOverPark()
      * You may refactor the code, or try to use
      * use @RunWith(MockitoJUnitRunner.class), @Mock (use Mockito, not PowerMock) and @InjectMocks
